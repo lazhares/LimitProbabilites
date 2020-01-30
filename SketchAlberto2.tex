@@ -1,0 +1,319 @@
+\documentclass[11pt,notitlepage,a4paper]{article}
+
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+%%BeginIpePreamble
+\usepackage{amssymb,mathtools, amsmath, amsfonts, amsthm}
+%%EndIpePreamble
+%\usepackage{color}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{chngcntr}
+\usepackage{cleveref}
+\usepackage{pdfpages}
+\usepackage{caption,subcaption,float}
+\usepackage[utf8]{inputenc}
+
+\counterwithout{equation}{section}
+
+
+
+\newlength{\margen}
+\setlength{\margen}{\paperwidth}
+\addtolength{\margen}{-\textwidth}
+\addtolength{\skip\footins}{0.7 cm}
+\setlength{\margen}{0.5\margen}
+\addtolength{\margen}{-1in}
+\setlength{\oddsidemargin}{\margen}
+\setlength{\evensidemargin}{\margen}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+%%%% Small setup %%%%
+\hypersetup{
+	colorlinks=false,
+	pdfborder={1 1 0.0005},
+}
+\setlength{\parskip}{0.2cm}
+%%%%%%%%%%%%%%%
+%\usepackage{tikz-cd}
+%\usetikzlibrary{cd}
+\usepackage[english]{babel}
+\usepackage{todonotes}
+%\usepackage{cleveref}
+%\usepackage{caption}
+%\usepackage{subcaption}
+%\usepackage{bbding}
+%\usepackage{tcolorbox}
+%\usepackage{natbib}
+%
+%\DeclareMathOperator{\incl}{incl}
+
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{fact}{Fact}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{propdef}{Proposition / Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{claim*}{Claim}
+
+%
+%\newtheorem{inneraxiom}{Axiom}
+%\newenvironment{axiom}[1]
+%{\renewcommand\theinneraxiom{#1}\inneraxiom}
+%{\endinneraxiom}
+%\newcommand{\cc}{\mathfrak{c}}
+
+
+%\newcommand{\Hc}{\mathcal{H}}
+%\newcommand{\Lan}{\mathcal{L}}
+%
+%\newcommand{\clist}{\mathfrak{c}_{1}, \cdots, \mathfrak{c}_m}
+%\newcommand{\morph}[1]{\stackrel{#1}{\simeq}}
+%\newcommand{\vlst}[2]{#1_1,\dots, #1_{#2}}
+%\newcommand{\gnp}{G(n,\beta_1/n^{a_1-1}, \dots,\beta_l/n^{a_l-1})}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\newcommand{\Ln}{\lim\limits_{n\to \infty}}
+\newcommand{\LN}{\lim\limits_{N\to \infty}}
+
+\title{More proof Sketches Regarding the Closure of 
+	Limiting Probabilities in Sparse Random Hyper-graphs}
+\date{\today}
+\author{Alberto Larrauri}
+
+
+\begin{document}
+	\maketitle 
+\section{Preliminaries}
+$G^d(N,p)$ denotes the binomial model of random $d$-uniform hyper-graphs. 
+Consider $d\geq 2$ fixed for the rest of this writing. 
+
+\begin{theorem} Let $c<(d-2)!$. Then, a.a.s all the components
+of $G^d(N,p(N))$, where $p(N)\sim c/N^{d-1}$, are either trees or unicycles.
+\end{theorem}
+\begin{proof} See \cite{erdHos1960evolution} for $d=2$ and
+	\cite{karonski2002phase} for the general case.
+	\todo[inline]{Está todo hecho en el modelo uniforme, 
+		pero la transferencia uniforme-$>$ binomial es ``sencilla''}
+\end{proof}
+
+\begin{theorem}
+	Let $c<(d-2)!$ and let $p(N)\sim c/N^{d-1}$. Let $\delta_N$ be the
+	random variable that counts the vertices in $G^d(N,p(N))$ belonging
+	to some unicyclic component. Then there is some constant $C$ such that 
+	$\mathrm{E}[\delta_n]$ is smaller than $C$ for any $N$. 
+	\todo[inline]{Este teorema lo he visto para grafos en el artículo de Erdos de 1960
+	, y más completo en el libro de Karonski, por ejemplo. Para hypergrafos no lo he encontrado, pero igual es cosa de buscar mejor. Lo demuestro de todas formas.}
+\end{theorem}
+\begin{proof}
+	Let $C_d(m)$ denote the number of connected labeled $d$-uniform
+	hypergraphs with $m$ edges and $n:=(d-1)m$ vertices. It is satisfied 
+	that for big values of $m$:
+	\[C_d(m)\leq \frac{n^n}{e^{(m-n)}}\frac{1}{(d-2)!^m},\]
+	where the constant hidden by the $O$-notation depends only on $d$.
+	Let $X_{N,m}$ be the random variable that counts the number of
+	unicyclic components in $G^d(N,c/N^{d-1})$ with exactly $m$ edges.
+	Then we have $\delta_N =\sum_{m=2}^{N/(d-1)} (d-1)m \cdot X_{N,m}$.
+	Also,
+	\begin{align}
+	\nonumber \mathrm{E}[X_{N,m}] & \leq 
+	\binom{N}{n} p(N)^m
+	(1-p(N))^{\binom{N}{d}-\binom{N-n}{d} - m}  \frac{n^n}{e^{(n-m)}}\frac{1}{(d-2)!^m}\\ 
+%	& \leq \frac{N^n}{n!}e^{\frac{n(n-1)}{2N}}p(N)^m
+%	e^{-p(N)\left[\binom{N}{d}-\binom{N-n}{d} - m\right]}
+%	\frac{n^n}{e^{(m-n)}}\frac{1}{(d-2)!^m}\\
+	&\nonumber \leq \frac{N^ne^n}{n^n}e^{-\frac{n(n-1)}{2N}}p(N)^m
+	e^{-p(N)\left[\binom{N}{d}-\binom{N-n}{d} - m\right]}
+	\frac{n^n}{e^{(n-m)}}\frac{1}{(d-2)!^m}\\
+	&\label{eqn:bound} =\left(\frac{c}{(d-2)!}\right)^m e^{n-\frac{n(n-1)}{2N}
+	-p(N)\left[\binom{N}{d}-\binom{N-n}{d} - m\right]+ 
+	(m-n)} 
+	\end{align}
+	Operating on the exponent of $e$ in the last term:
+	\begin{align*}
+	&n-\frac{n(n-1)}{2N}
+	-p(N)\left[\binom{N}{d}-\binom{N-n}{d} - m\right]+ 
+	(m-n)\leq\\ 
+	&- \frac{n(n-1)}{2N} - p(N)\left[\binom{N}{d}-\binom{N-n}{d}\right]
+	+ p(N)m + m \leq \\
+	& m\Big(-\frac{(d-1)}{2} - \frac{c}{(d-2)!} + p(N) + 1\Big)	\leq \\
+	& m\Big(1 - \frac{c}{(d-2)!} \Big).	
+	\end{align*}
+	Thus, substituting in \cref{eqn:bound} we obtain
+	\begin{equation}
+	\label{eqn:expbound}
+		\mathrm{E}[X_{N,m}]\leq \Bigg(\frac{c}{(d-2)!}
+		e^{1-\frac{c}{(d-2)!}} \Bigg)^m
+	\end{equation}
+	One can easily check that $xe^{1-x}$ grows monotonously from $0$
+	to $1$ as $x$ goes from $0$ to $1$. Thus, $\frac{c}{(d-2)!}
+	e^{1-\frac{c}{(d-2)!}}<1$.\par
+	By definition it is satisfied
+	\[
+	\mathrm{E}[\delta_N]=\sum_{m=2}^{N/(d-1)}	m \mathrm{E}[X_{N,m}],
+	\]
+	except for the case $d=2$, where the sum starts at $m=3$ instead of $m=2$.
+	This is because there are no connected graphs with $2$ vertices and $2$ edges. 
+	Because of \cref{eqn:expbound}, for sufficiently large values of $m$ the terms
+	$m\mathrm{E}[X_{N,m}]$ are bounded by
+	$m(\frac{c}{(d-2)!}e^{1-\frac{c}{(d-2)!}})^m$ uniformly for all values of $N$. 
+	Otherwise, for small values of $m$, the $m\mathrm{E}[X_{N,m}]$ are bounded as
+	well because
+	\[
+	\LN m\mathrm{E}[X_{N,m}]= \left(ce^{\frac{c}{(d-2)!}}\right)^m\frac{C_d(m)}{(m\cdot(d-1))!}
+	\]
+	In consequence, using the dominated converge theorem we can conclude that
+	\[
+	\LN \mathrm{E}[\delta_N]=\sum_{m=2}^{N/(d-1)}	m \mathrm{E}[X_{N,m}]
+	\]
+	exists and is not infinite. 
+	\end{proof}
+	
+	\begin{theorem}
+		Let $c< (d-2)!$, and let $p(N)\sim c/N^{d-1}$. For any $k\geq 2$, let  $\gamma_{N,\geq k}$ be the random variable that counts how many 
+		cycles with at least $k$ edges lie in $G^d(N,p(N))$. Then
+		\[
+		\LN \mathrm{E}[\gamma_{N,\geq k}]=\sum_{l=k}^{\infty} 
+		\left(\frac{c}{(d-2)!}\right)^l \frac{1}{2l}
+		\] 	
+		In particular, if $\gamma_N$ is the random variable that counts the cycles
+		in $G^d(N,p(N))$ then, if $d>2$:
+		\[
+		\LN \mathrm{E}[\gamma_{N}]	= 
+		\begin{cases}
+		\frac{c}{2(d-2)!}+ \ln\left(1-\frac{c}{2(d-2)!}\right), &  
+		\text{ if } d>2\\
+		\frac{c}{2}+ \frac{c^2}{4} 
+		\ln\left(1-\frac{c}{2}\right), &
+		\text{ if } d=2.
+		\end{cases}
+		\]
+	\end{theorem}
+	\todo[inline]{Esto está hecho en el artículo de Erdos para grafos, y para 
+	hypergrafos no lo he visto.}
+	\begin{proof}
+		For $k\geq 2$ ($k\geq 3$ if $d=2$), let $\gamma_{N,k}$ be the random
+		variable that counts
+		the $k$-cycles that lie in $G^d(N,p(N))$.
+		A simple computation yields
+		$
+		\mathrm{E}[\gamma_{N,k}]= \frac{(N)_{k(d-1)}}{2k}
+		\left(\frac{c}{N^{d-1}}\right)^k,$
+		and
+		$
+		\LN	\mathrm{E}[\gamma_{N,k}]= \frac{c^k}{2k}
+		$.
+		Not only this, but also
+		$
+		\mathrm{E}[\gamma_{N,k}]\leq \frac{c^k}{2k}$
+		for all $N$. In consequence, applying the dominated convergence
+		theorem we obtain
+		\[ 
+		\LN \sum_{l=k}^\infty \mathrm{E}[\gamma_{N,l}]=
+		 \sum_{l=k}^\infty \frac{c^l}{2l}.
+		\]
+		Using that $\gamma_{N,\geq k}$ is the sum of all the $\gamma_{N,l}$
+		for $l\geq k$ and the Taylor expansion of $ln(1-x)$ yields the desired
+		results. 
+	\end{proof}
+	
+	Given $0<c<(d-2)!$ we define the function $B_d(c)$ as 
+	the limit as $N$ tends to infinity of the expected number of
+	cycles in $G^d(N,c/N^{d-1})$. Because of our last theorem
+	\[
+	B_d(c)=\begin{cases}
+	\frac{c}{2(d-2)!}+ \ln\left(1-\frac{c}{2(d-2)!}\right)
+	,& \text{ if } d>2\\	
+	\frac{c}{2}+ \frac{c^2}{4} \ln\left(1-\frac{c}{2}\right)
+	, &\text{ if } d=2.
+	\end{cases}
+	\]
+	
+	
+	A simple application of the factorial moments method proves the following
+	theorem:
+	\begin{theorem}
+		Let $k_1,\dots,k_j\geq 2$ ($\geq 3$ if $d=2$). Then, 
+		as $N$ tends to infinity the $\gamma_{N,l_i}$'s converge 
+		in distribution to independent Poisson variables
+		with mean values $\lambda_i:=\frac{c^{l_i}}{2l_i}$ respectively.
+		That is, for any $a_1,\dots,a_j\in \N$,
+		\[
+		\LN \mathrm{Pr}\Big(
+		\bigwedge_{i=1}^r
+		\gamma_{N,l_i}=a_i		
+		\Big)= \prod_{i=1}^{j} e^{-\lambda_i}\frac{\lambda_i^{a_i}}{a_i!}
+		\]
+	\end{theorem}
+  	\todo[inline]{Esto está hecho en el libro de Bollobás de random graphs. 
+  	Para hypergrafos
+  	no lo he encontrado, pero realmente es lo mismo. Si queréis lo hago.}
+	
+	
+	Let $H$ be an unicycle and let $m=|E(H)|$, $n=|V(H)|=m(d-1)$. 
+	Let $X_{N,H}$ be the random variable that counts
+	the number of connected components in $G^d(N,p(N))$ isomorphic to $H$. Then
+	\[ 
+	\mathrm{E}[X_{N,H}]= \frac{(N)_n}{|Aut(H)|}
+	p(N)^{m}(1-p(N))^{\binom{N}{d}-\binom{N-n}{d} - m}.
+	\]
+	And if $p(N)\sim c/N$,
+	\[
+	\LN \mathrm{E}[X_{N,H}]=  \frac{c^m}{|Aut(H)|}
+	e^{\LN c\frac{\binom{N}{d}-\binom{N-n}{d} - m}{N^{d-1}}}
+	=  \frac{c^m}{|Aut(H)|}
+	e^{c\frac{m}{(d-2)!}}.
+	\]	
+	For convenience's sake we will often use the auxiliary variable
+	$s=\frac{c}{(d-2)!}e^{\frac{c}{(d-2)!}}$. We can rewrite last 
+	limit in terms of $s$ as:
+	\[
+	\LN \mathrm{E}[X_{N,H}]=(s)^m
+	\frac{(d-2)!^m}{|Aut(H)|}.	
+	\]
+	Another application of the factorial moments method proves the next theorem:
+
+\begin{theorem}
+	Let $H_1,\dots, H_j$ be unicycles, and let $P(N)\sim c/N$. 
+	Then, as $N$ tends to infinity, the $X_{N,H_i}$'s converge in 
+	distribution to independent Poisson variables with means
+	$\lambda_i=s^{|E(H_i)|}\frac{(d-2)!^{|E(H_i)|}}{|Aut(H_i)}$
+	respectively. That is, for any $a_1,\dots, a_j\in \N$,
+	\[
+	\LN \mathrm{Pr}\Big(
+	\bigwedge_{i=1}^r
+	X_{N,H_i}=a_i		
+	\Big)= \prod_{i=1}^{j} e^{-\lambda_i}\frac{\lambda_i^{a_i}}{a_i!}
+	\]
+\end{theorem} 
+
+Next we show some stuff
+
+
+
+
+\begin{theorem}
+	
+\end{theorem} 
+
+
+
+
+ 
+
+
+
+
+\bibliography{biblio}
+\bibliographystyle{unsrt}
+\end{document}
