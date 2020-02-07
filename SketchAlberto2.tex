@@ -95,105 +95,162 @@
 
 \begin{document}
 	\maketitle 
-\section{Preliminaries}
-$G^d(N,p)$ denotes the binomial model of random $d$-uniform hyper-graphs. 
-Consider $d\geq 2$ fixed for the rest of this writing. 
+\section*{Preliminaries}
+$G^d(N,p)$ denotes the binomial model of random $d$-uniform hypergraphs. 
+We will consider $d\geq 2$ fixed for the rest of this writing. 
+We will deal with the case where $p=p(N)= c/N^{d-1}$ for some real number 
+$c> 0$. For each $N\in \N$, we will use $G_N:=G_N(c)$ to denote a random sample from $G^d(N,p)$. We will refer to $d$-uniform hypergraphs simply as hypergraphs.
+\todo[inline]{Si no me equivoco todo lo de aquí sirve también para el caso
+en el que $p(N)\sim c/n^{d-1}$, no hace falta que sean iguales. Pongo igualdad
+porque es más fácil de escribir.}
 
-\begin{theorem} Let $c<(d-2)!$. Then, a.a.s all the components
-of $G^d(N,p(N))$, where $p(N)\sim c/N^{d-1}$, are either trees or unicycles.
+For each $n,m\in \N$ with $m\leq n$ we will
+denote the product $n(n-1)\cdots (n-m+1)$ by 
+$(n)_m$. 
+
+\section*{Theorems}
+\begin{theorem} \label{thm:subcritical}
+Let $0<c<(d-2)!$. Then, a.a.s all the components
+of $G_N$, are either trees or unicycles.
 \end{theorem}
 \begin{proof} See \cite{erdHos1960evolution} for $d=2$ and
 	\cite{karonski2002phase} for the general case.
 	\todo[inline]{Está todo hecho en el modelo uniforme, 
 		pero la transferencia uniforme-$>$ binomial es ``sencilla''}
 \end{proof}
-We will call the \textbf{fragment} $F_N$ to the union of the unicyclic 
-components in $G^d(N,p(N))$.
+Given an hypergraph $G$, we will call the \textbf{fragment} $F(G)$
+of $G$ to the union of its unicyclic components. We will abbreviate
+$F(G_N)$ as $F_N$.
 
 
 \begin{theorem} \label{thm:sizefragment}
-	Let $c<(d-2)!$ and let $p(N)\sim c/N^{d-1}$. Let $\delta_N$ be the
-	random variable that counts the vertices in $F_N$. 
-	Then there is some constant $C$ such that 
-	$\mathrm{E}[\delta_n]$ is smaller than $C$ for any $N$. 
+	Let $0<c<(d-2)!$. For each $i\in \N$ let
+	$X_{N,i}$ be the random variable that
+	counts the number of unicyclic components 
+	in $G_N$ that contain exactly $i$ edges.
+	Then $\LN \mathrm{E}[e(F_N)]$  
+	exists and is a finite quantity. Furthermore,
+	\[
+	\LN \mathrm{E}[e(F_N)]=\sum_{i=1}^\infty i \LN X_{N,i}.
+	\]
 	\todo[inline]{Este teorema lo he visto para grafos en el artículo de Erdos de 1960
 	, y más completo en el libro de Karonski, por ejemplo. Para hypergrafos no lo he encontrado, pero igual es cosa de buscar mejor. Lo demuestro de todas formas.}
 \end{theorem}
 \begin{proof}
 	Let $C_d(m)$ denote the number of connected labeled $d$-uniform
-	hypergraphs with $m$ edges and $n:=(d-1)m$ vertices. It is satisfied 
-	that for big values of $m$:
-	\[C_d(m)\leq \frac{n^n}{e^{(m-n)}}\frac{1}{(d-2)!^m},\]
-	where the constant hidden by the $O$-notation depends only on $d$.
-	Let $X_{N,m}$ be the random variable that counts the number of
-	unicyclic components in $G^d(N,c/N^{d-1})$ with exactly $m$ edges.
-	Then we have $\delta_N =\sum_{m=2}^{N/(d-1)} (d-1)m \cdot X_{N,m}$.
-	Also,
+	hypergraphs with $m$ edges and $n:=(d-1)m$ vertices. 
+	By definition $e(F_N) =\sum_{i=1}^{\infty} i \cdot X_{N,i}$, and
+	in consequence 
+	\[
+	\LN \mathrm{E}[e(F_N)]=\LN \sum_{i=1}^\infty i 
+	\mathrm{E}\big[ X_{N,i}\big].
+	\]
+	To prove the statement we have to show that we can 
+	exchange the limit and summation from the RHS of last equality.
+	For that we will use the dominated convergence theorem. 
+	First, notice that for each $i\in \N$,
+	\begin{align*}
+	\LN	\mathrm{E}\big[X_{N,i}\big]&=
+	\LN \binom{N}{(d-1)i}\cdot\left(\frac{c}{N^{d-1}}\right)^i
+	\cdot\left(1- \frac{c}{N^{d-1}}\right)^{\binom{N}{d}-
+	\binom{N-(d-1)i}{d} - i}\cdot C_d(i)\\
+	&=\left(c e^{-\frac{c}{(d-2)!}}\right)^i\cdot 
+	\frac{C_d(i)}{((d-1)i)!}.
+	\end{align*}
+	Here we have used that
+	for any fixed $i$ $\binom{N}{d}-
+	\binom{N-(d-1)i}{d} - i\sim i N^{(d-1)}/(d-2)!$ as
+	$N$ tends to infinity, and it follows that
+	\[
+	\Ln \left(1- \frac{c}{N^{d-1}}\right)^{\binom{N}{d-1}-
+	\binom{N-(d-1)i}{d-1} - i} =
+	e^{-\frac{ic}{(d-2)!}}.
+	\]
+	Now we have to dominate the terms $\mathrm{E}[X_{N,i}]$
+	by some sequence $a_i$ such that $\sum_{i=1}^\infty ia_i\leq\infty$.\par
+	It has been 
+	proven (see \cite{karonski2002phase}) 
+	that for big values of $i$
+	\[C_d(i)\leq \frac{((d-1)i)^{(d-1)i}}{e^{((d-2)i)}}\frac{1}{(d-2)!^i},\]
+	In consequence, if we name $j=(d-1)i$, for sufficiently large $i$ we
+	obtain
 	\begin{align}
-	\nonumber \mathrm{E}[X_{N,m}] & \leq 
-	\binom{N}{n} p(N)^m
-	(1-p(N))^{\binom{N}{d}-\binom{N-n}{d} - m}  \frac{n^n}{e^{(n-m)}}\frac{1}{(d-2)!^m}\\ 
+	\nonumber \mathrm{E}[X_{N,i}] & \leq 
+	\binom{N}{j}\cdot p(N)^{i}\cdot
+	(1-p(N))^{\binom{N}{d}-\binom{N-j}{d} - i}
+	\cdot\frac{{j}^{j}}{e^{((d-2)i)}}\frac{1}{(d-2)!^i}\\ 
 %	& \leq \frac{N^n}{n!}e^{\frac{n(n-1)}{2N}}p(N)^m
 %	e^{-p(N)\left[\binom{N}{d}-\binom{N-n}{d} - m\right]}
 %	\frac{n^n}{e^{(m-n)}}\frac{1}{(d-2)!^m}\\
-	&\nonumber \leq \frac{N^ne^n}{n^n}e^{-\frac{n(n-1)}{2N}}p(N)^m
-	e^{-p(N)\left[\binom{N}{d}-\binom{N-n}{d} - m\right]}
-	\frac{n^n}{e^{(n-m)}}\frac{1}{(d-2)!^m}\\
-	&\label{eqn:bound} =\left(\frac{c}{(d-2)!}\right)^m e^{n-\frac{n(n-1)}{2N}
-	-p(N)\left[\binom{N}{d}-\binom{N-n}{d} - m\right]+ 
-	(m-n)} 
+	&\nonumber \leq \frac{N^{j}e^{j}}{j^j}\cdot 
+	p(N)^i \cdot
+	e^{-p(N)\left[\binom{N}{d}-\binom{N-j}{d} - i\right]}
+	\cdot \frac{j^j}{e^{(d-2)i}}\frac{1}{(d-2)!^i}\\
+	&\label{eqn:bound} =\left(\frac{c}{(d-2)!}\right)^i 
+	\cdot
+	e^{j-p(N)\left[\binom{N}{d}-\binom{N-j}{d} - i\right]- 
+	(d-2)i} 
 	\end{align}
-	Operating on the exponent of $e$ in the last term:
+	Here we have used the bounds
+	$1/j!\leq e^j/j^j$, $\quad (N)_j\leq
+	N^j$, and 
+	$(1-p(N))\leq e^{-p(N)}$.
+	Operating on the exponent of $e$ in the last term
+	we get, for sufficiently large $N$ uniformly in 
+	$i$,
 	\begin{align*}
-	&n-\frac{n(n-1)}{2N}
-	-p(N)\left[\binom{N}{d}-\binom{N-n}{d} - m\right]+ 
-	(m-n)\leq\\ 
-	&- \frac{n(n-1)}{2N} - p(N)\left[\binom{N}{d}-\binom{N-n}{d}\right]
-	+ p(N)m + m \leq \\
-	& m\Big(-\frac{(d-1)}{2} - \frac{c}{(d-2)!} + p(N) + 1\Big)	\leq \\
-	& m\Big(1 - \frac{c}{(d-2)!} \Big).	
+	&j
+	-p(N)\left[\binom{N}{d}-\binom{N-j}{d} - i\right]- 
+	(d-2)i \leq \\ 
+	&- p(N)\left[\binom{N}{d}-\binom{N-j}{d}\right]
+	+ p(N)i + i \leq \\
+	& i\Big(1 - \frac{c}{(d-2)!}\Big) + c
 	\end{align*}
-	Thus, substituting in \cref{eqn:bound} we obtain
+	Here we have used that
+	$\binom{N}{d}-\binom{N-j}{d}\leq N^{d-1}j/(d-1)!$,
+	and also $p(N)i\leq c$ because we can suppose that $i<<N^{d-1}$ (otherwise 
+	$\mathrm{E}[X_{N,i}]=0$).
+	Thus, substituting at the end of 
+	\cref{eqn:bound} we obtain
 	\begin{equation}
 	\label{eqn:expbound}
-		\mathrm{E}[X_{N,m}]\leq \Bigg(\frac{c}{(d-2)!}
-		e^{1-\frac{c}{(d-2)!}} \Bigg)^m
+		\mathrm{E}[X_{N,i}]\leq \Bigg(\frac{c}{(d-2)!}
+		e^{1-\frac{c}{(d-2)!}} \Bigg)^i \cdot e^c,
 	\end{equation}
+	for sufficiently large $i$ and large $N$ uniformly
+	in $i$. 
 	One can easily check that $xe^{1-x}$ grows monotonously from $0$
 	to $1$ as $x$ goes from $0$ to $1$. Thus, $\frac{c}{(d-2)!}
-	e^{1-\frac{c}{(d-2)!}}<1$.\par
-	By definition it is satisfied
+	e^{1-\frac{c}{(d-2)!}}<1$, and
 	\[
-	\mathrm{E}[\delta_N]=\sum_{m=2}^{N/(d-1)}	m \mathrm{E}[X_{N,m}],
+	\sum_{i=1}^\infty i\cdot\left(\frac{c}{(d-2)!}
+	e^{1-\frac{c}{(d-2)!}} \right)^i\cdot e^c < \infty.
 	\]
-	except for the case $d=2$, where the sum starts at $m=3$ instead of $m=2$.
-	This is because there are no connected graphs with $2$ vertices and $2$ edges. 
-	Because of \cref{eqn:expbound}, for sufficiently large values of $m$ the terms
-	$m\mathrm{E}[X_{N,m}]$ are bounded by
-	$m(\frac{c}{(d-2)!}e^{1-\frac{c}{(d-2)!}})^m$ uniformly for all values of $N$. 
-	Otherwise, for small values of $m$, the $m\mathrm{E}[X_{N,m}]$ are bounded as
-	well because
+	Hence, using \cref{eqn:expbound} we can
+	apply the dominated convergence theorem
+	obtaining
 	\[
-	\LN m\mathrm{E}[X_{N,m}]= \left(ce^{\frac{c}{(d-2)!}}\right)^m\frac{C_d(m)}{(m\cdot(d-1))!}
+	\LN \sum_{i=1}^\infty i 
+	\mathrm{E}\big[ X_{N,i}\big]
+	= \sum_{i=1}^\infty i \LN \mathrm{E}\big[ X_{N,i}\big]
+	,
 	\]
-	In consequence, using the dominated converge theorem we can conclude that
-	\[
-	\LN \mathrm{E}[\delta_N]=\sum_{m=2}^{N/(d-1)}	m \mathrm{E}[X_{N,m}]
-	\]
-	exists and is not infinite. 
+	and both expressions are finite quantities, proving
+	the theorem. 
 	\end{proof}
 	
 	\begin{theorem} \label{thm:expectedcycles}
-		Let $c< (d-2)!$, and let $p(N)\sim c/N^{d-1}$. For any $k\geq 2$, let  $\gamma_{N,\geq k}$ be the random variable that counts how many 
-		cycles with at least $k$ edges lie in $G^d(N,p(N))$. Then
+		Let $0< c< (d-2)!$. For any $k\in \N$, 
+		let  $Y_{N,\geq k}$ be the random variable that counts how many 
+		cycles with at least $k$ edges lie in $G_N$. Then
 		\[
 		\LN \mathrm{E}[\gamma_{N,\geq k}]=\sum_{l=k}^{\infty} 
 		\left(\frac{c}{(d-2)!}\right)^l \frac{1}{2l}
 		\] 	
-		In particular, if $\gamma_N$ is the random variable that counts the cycles
-		in $G^d(N,p(N))$ then, if $d>2$:
+		In particular, if $Y_N$ is the random variable that counts the cycles
+		in $G_N$ then:
 		\[
-		\LN \mathrm{E}[\gamma_{N}]	= 
+		\LN \mathrm{E}[Y_{N}]	= 
 		\begin{cases}
 		\frac{c}{2(d-2)!}+ \ln\left(1-\frac{c}{2(d-2)!}\right), &  
 		\text{ if } d>2\\
@@ -203,37 +260,39 @@ components in $G^d(N,p(N))$.
 		\end{cases}
 		\]
 	\end{theorem}
-	\todo[inline]{Esto está hecho en el artículo de Erdos para grafos, y para 
-	hypergrafos no lo he visto.}
+	\todo[inline]{Esto está hecho en el artículo \cite{erdHos1960evolution}
+	para grafos, y para hypergrafos no lo he visto.}
 	\begin{proof}
-		For $k\geq 2$ ($k\geq 3$ if $d=2$), let $\gamma_{N,k}$ be the random
+		For $k\in \N$ let $Y_{N,k}$ be the random
 		variable that counts
-		the $k$-cycles that lie in $G^d(N,p(N))$.
-		A simple computation yields
+		the $k$-cycles that lie in $G_N$.
+		A simple computation yields that for 
+		any $k\geq 2$ ($k\geq 3$ if $d=2$),
 		$
-		\mathrm{E}[\gamma_{N,k}]= \frac{(N)_{k(d-1)}}{2k}
+		\mathrm{E}[Y_{N,k}]= \frac{(N)_{k(d-1)}}{2k}
 		\left(\frac{c}{N^{d-1}}\right)^k,$
 		and
 		$
-		\LN	\mathrm{E}[\gamma_{N,k}]= \frac{c^k}{2k}
+		\LN	\mathrm{E}[Y_{N,k}]= \frac{c^k}{2k}
 		$.
-		Not only this, but also
+		Also,
 		$
-		\mathrm{E}[\gamma_{N,k}]\leq \frac{c^k}{2k}$
+		\mathrm{E}[Y_{N,k}]\leq \frac{c^k}{2k}$
 		for all $N$. In consequence, applying the dominated convergence
 		theorem we obtain
 		\[ 
-		\LN \sum_{l=k}^\infty \mathrm{E}[\gamma_{N,l}]=
-		 \sum_{l=k}^\infty \frac{c^l}{2l}.
+		\LN \sum_{l=k}^\infty \mathrm{E}[Y_{N,l}]=
+		 \sum_{l=k}^\infty \frac{c^l}{2l} \quad 
+		 \text{ for any } k\in \N.
 		\]
-		Using that $\gamma_{N,\geq k}$ is the sum of all the $\gamma_{N,l}$
-		for $l\geq k$ and the Taylor expansion of $ln(1-x)$ yields the desired
-		results. 
+		Using that $Y_{N,\geq k}$ is the sum of all the $Y_{N,l}$
+		for $l\geq k$ and the Taylor expansion of $ln(1-x)$ we obtain
+		the desired	result. 
 	\end{proof}
 	
 	Given $0<c<(d-2)!$ we define the function $B_d(c)$ as 
 	the limit as $N$ tends to infinity of the expected number of
-	cycles in $G^d(N,c/N^{d-1})$. Because of our last theorem
+	cycles in $G_N(c)$. Because of our last theorem
 	\[
 	B_d(c)=\begin{cases}
 	\frac{c}{2(d-2)!}+ \ln\left(1-\frac{c}{2(d-2)!}\right)
@@ -244,28 +303,40 @@ components in $G^d(N,p(N))$.
 	\]
 	
 	\begin{corollary} \label{thm:limitchangeunicycles}
-		Let $c<(d-2)!$ and $p(N)\sim c/N^{d-1}$. For each $k\in \N$ let 
-		$Z_{N,k}$ be the random variable that counts the
-		unicyclic components in $G^d(N,p(N))$ with exactly $k$ edges. 
+		Let $0<c<(d-2)!$. For each $k\in \N$ let 
+		$X_{N,k}$ be the random variable that counts the
+		unicyclic components in $G_N$ with exactly $k$ edges. 
 		Then 
 		\[
-		\sum_{i=1}^\infty \LN \mathrm{E}\big[ Z_{N,i} \big]
-		=  \LN \mathrm{E}\big[\sum_{i=1}^\infty Z_{N,i} \big]	
-		= B_d(c).	
+	 	B_d(c)=\LN \mathrm{E}\big[\sum_{i=1}^\infty X_{N,i} \big]	
+		= \sum_{i=1}^\infty \LN \mathrm{E}\big[ X_{N,i} \big].
 		\]
 	\end{corollary}
+	\begin{proof}
+	The equality $B_d(c)=\LN \mathrm{E}\big[\sum_{i=1}^\infty$ follows from the
+	fact that the asymptotic
+	number of expected cycles and the asymptotic number
+	of expected unyciclic components in $G_N$ coincide
+	for $0<c<(d-2)!$ because of \cref{thm:subcritical}.\par
+	The equality $\LN \mathrm{E}\big[\sum_{i=1}^\infty X_{N,i} \big]	
+	= \sum_{i=1}^\infty \LN \mathrm{E}\big[ X_{N,i} \big]$
+	follows from applying the dominated converge theorem as in 
+	\cref{thm:sizefragment}.
+	\end{proof}
 	A simple application of the factorial moments method proves the following
 	theorem:
 	\begin{theorem} \label{thm:probcycles} 
+		For each $k\in \N$, let $Y_{N,k}$ be the random variable
+		that counts the number of $k$-cycles in $G_N$.
 		Let $k_1,\dots,k_j\geq 2$ ($\geq 3$ if $d=2$). Then, 
-		as $N$ tends to infinity the $\gamma_{N,l_i}$'s converge 
+		as $N$ tends to infinity the $Y_{N,l_i}$'s converge 
 		in distribution to independent Poisson variables
 		with mean values $\lambda_i:=\frac{c^{l_i}}{2l_i}$ respectively.
 		That is, for any $a_1,\dots,a_j\in \N$,
 		\[
 		\LN \mathrm{Pr}\Big(
 		\bigwedge_{i=1}^r
-		\gamma_{N,l_i}=a_i		
+		Y_{N,l_i}=a_i		
 		\Big)= \prod_{i=1}^{j} e^{-\lambda_i}\frac{\lambda_i^{a_i}}{a_i!}
 		\]
 	\end{theorem}
@@ -274,26 +345,26 @@ components in $G^d(N,p(N))$.
   	no lo he encontrado, pero realmente es lo mismo. Si queréis lo hago.}
 	
 	
-	Let $H$ be an unicycle and let $m=|E(H)|$, $n=|V(H)|=m(d-1)$. 
+	Let $H$ be an unicycle and let $i=e(H)$, $j=v(H)=i(d-1)$. 
 	Let $X_{N,H}$ be the random variable that counts
-	the number of connected components in $G^d(N,p(N))$ isomorphic to $H$. Then
+	the number of connected components in $G_N$ isomorphic to $H$. Then
 	\[ 
-	\mathrm{E}[X_{N,H}]= \frac{(N)_n}{|Aut(H)|}
-	p(N)^{m}(1-p(N))^{\binom{N}{d}-\binom{N-n}{d} - m}.
+	\mathrm{E}[X_{N,H}]= \frac{(N)_i}{|Aut(H)|}
+	p(N)^{i}(1-p(N))^{\binom{N}{d}-\binom{N-j}{d} - i}.
 	\]
-	And if $p(N)\sim c/N$,
+	And substituting $p(N)=c/N^{d-1}$,
 	\[
-	\LN \mathrm{E}[X_{N,H}]=  \frac{c^m}{|Aut(H)|}
-	e^{\LN c\frac{\binom{N}{d}-\binom{N-n}{d} - m}{N^{d-1}}}
-	=  \frac{c^m}{|Aut(H)|}
-	e^{c\frac{m}{(d-2)!}}.
+	\LN \mathrm{E}[X_{N,H}]=  \frac{c^i}{|Aut(H)|}
+	e^{\LN c\frac{\binom{N}{d}-\binom{N-j}{d} - i}{N^{d-1}}}
+	=  \frac{c^i}{|Aut(H)|}
+	e^{c\frac{i}{(d-2)!}}.
 	\]	
-	For convenience's sake we will often use the auxiliary variable
+	For convenience's sake we will sometimes use the auxiliary variable
 	$s=\frac{c}{(d-2)!}e^{\frac{c}{(d-2)!}}$. We can rewrite last 
 	limit in terms of $s$ as:
 	\[
-	\LN \mathrm{E}[X_{N,H}]=(s)^m
-	\frac{(d-2)!^m}{|Aut(H)|}.	
+	\LN \mathrm{E}[X_{N,H}]=(s)^i
+	\frac{(d-2)!^i}{|Aut(H)|}.	
 	\]
 	Another application of the factorial moments method proves the next theorem:
 
@@ -301,7 +372,7 @@ components in $G^d(N,p(N))$.
 	Let $H_1,\dots, H_j$ be unicycles, and let $P(N)\sim c/N$. 
 	Then, as $N$ tends to infinity, the $X_{N,H_i}$'s converge in 
 	distribution to independent Poisson variables with means
-	$\lambda_i=s^{|E(H_i)|}\frac{(d-2)!^{|E(H_i)|}}{|Aut(H_i)}$
+	$\lambda_i=s^{e(H_i)}\frac{(d-2)!^{e(H_i)}}{|Aut(H_i)|}$
 	respectively. That is, for any $a_1,\dots, a_j\in \N$,
 	\[
 	\LN \mathrm{Pr}\Big(
@@ -310,9 +381,6 @@ components in $G^d(N,p(N))$.
 	\Big)= \prod_{i=1}^{j} e^{-\lambda_i}\frac{\lambda_i^{a_i}}{a_i!}
 	\]
 \end{theorem} 
-
-Next we show some stuff
-
 
 
 
@@ -498,7 +566,7 @@ of $F_N$ is indeed a probability distribution.
 
 
 
-\begin{theorem}
+\begin{theorem} \label{thm:limitdistribution}
 	Let $0<c<(d-2)!$ and let $p(N)\sim c/N^{d-1}$. 
 	Let $H_1, \dots H_k, \dots$ be an enumeration of all hypergraphs
 	in $\mathcal{U}$. For each $i\in \N$ 
@@ -529,6 +597,20 @@ of $F_N$ is indeed a probability distribution.
 	and the result follows. 
 \end{proof}
 
+Given $H\in \mathcal{U}$, the property
+$F(G)\simeq H$ cannot be expressed in FO logic. This is
+because one has to rule out the existence of arbitrarily 
+long cycles in $G$. Hence, in the following proof 
+it will be useful to consider "the fragment up
+to connected components with $i$ edges".
+Given an hypergraph $G$ and $i\in \N$, let $F_i(G)$
+be the union of connected components
+in $G$ that are unicycles with no more than $i$ edges, and let
+$\mathcal{U}_i$ be the class of hypergraphs whose connected components
+are unicycles with at most $i$ edges. 
+Given any $H\in \mathcal{U}_i$, the property $F_i(G)\simeq H$, 
+unlike $F(G)\simeq H$, is expressible in FO logic. We will 
+abbreviate $F_i(G_N)$ as $F_{N,i}$. 
 
 \begin{theorem}
 	Let $0<c<(d-2)!$, and $p(N)\sim c/N^{d-1}$. Let 
@@ -538,13 +620,13 @@ of $F_N$ is indeed a probability distribution.
 	Consider the sets 
 	\[
 	L_c:=\{
-	\LN \mathrm{Pr}(G^d(N,p(N)) \text{ satisfies } P) \, | \,
+	\LN \mathrm{Pr}\big(P(G_N)\big) \, | \,
 	P \text{ FO property} \},
 	\] 
 	and 
 	\[
 	S_c:=\{
-	\sum_{H_i\in T} p_i \, | \, T \subset \mathcal{U} \,
+	\sum_{i\in T} p_i \, | \, T \subseteq \N \,
 	\}.	
 	\]
 	Then it is satisfied that $\overline{L_c}=S_c$. 		
@@ -552,24 +634,163 @@ of $F_N$ is indeed a probability distribution.
 \begin{proof}
 	We will prove the statement by showing both 
 	$S_c\subseteq \overline{L_c}$ and
-	$\overline{L_c}\subseteq S_c$. We begin with 
+	$\overline{L_c}\subseteq S_c$. \par 
+	We begin with 
 	$S_c\subseteq \overline{L_c}$. 
 	Let $T\subset \mathcal{U}$, and let $\epsilon>0$ be
 	an arbitrarily small real number. We show that 
 	there exists a first order property $P$ such that
-	\[ \Big| \LN \mathrm{Pr}\big( G^d(N,p(N)) \text{ satisfies } P \big) 
-	- \sum_{H_i\in T} p_i \Big| \leq \epsilon \].
-	As 
-	
-	
-	
-	For each $k\in \N$ let $F_{N,k}$ be the union of connected components
-	in $G^d(N, p(N))$ that are unicycles with no more than $k$ edges, and let
-	$\mathcal{U}_k$ be the class of hypergraphs whose connected components
-	are unicycles with at most $k$ edges. 
-	Given any $H\in \mathcal{U_k}$, the property $F_{N,k}\simeq H$ is 
-	expressible in FO logic. 
-	
+	\[ \Big| \LN \mathrm{Pr}\big( P(G_N)\big) 
+	- \sum_{i\in T} p_i \Big| \leq \epsilon. \]
+	As $\sum_{i=1}^{\infty} p_i=1$, there exists some $j$ such that
+	$\sum_{i=1}^j p_i \leq \epsilon/2$. Fix such $j$. Let
+	$T^\prime= T \cap \{ 1,\dots,j-1\}$. Suppose
+	$T^\prime=\{i_1,\dots,i_k\}$. 
+	Consider the properties $Q$ and $Q^\prime$ defined as
+	\[
+	Q(G):= \bigvee_{i\in T} F(G)\simeq H_i,  \qquad
+	Q^\prime(G):= \bigvee_{x=1}^k F(G)\simeq H_{i_x}.
+	\]
+	Then, it is satisfied  
+	\[
+	\LN \Big| \mathrm{Pr}\big( Q(G_N) \big)
+	- \mathrm{Pr}\big( Q^\prime(G_N) 
+	\big)\Big| \leq \sum_{i=j}^\infty p_i \leq \frac{\epsilon}{2}.
+	\]
+	Let $l_1$ be 
+	the maximum number of edges in a connected component belonging
+	to any of $H_{i_1},\dots,H_{i_k}$. Let 
+	$M=\LN \mathrm{E}[e(F_N)]$, and let $l_2=M/2k\epsilon$.
+	Define $l=\max(l_1,l_2)$. 
+	The first order property $P$ will be defined as 
+	\[
+	P(G):=\bigvee_{x=1}^k F_l(G)\simeq H_{i_x}.
+	\]
+	As $l\geq l_1$, all
+	$H_{i_1},\dots, H_{i_k}$ belong to $\mathcal{U}_l$.
+	For each $i_x$, we have that
+	\[ \mathrm{Pr}\big(F_{N,l}\simeq H_{i_x} \wedge 
+	F_N\simeq H_{i_x} \big)\leq
+	\mathrm{Pr}\big(F_N\notin \mathcal{U}_l\big) \leq 
+	\mathrm{Pr}\big(e(F_N)>l\big).
+	\]
+	and because $l\geq l_2$,
+	\[
+	\LN \mathrm{Pr}\big(e(F_N)>l\big)
+	\leq \frac{\epsilon}{2k}.
+	\]
+	Thus,
+	\[
+	\big|\LN \mathrm{Pr}\big(P(G_N)\big)- \sum_{i\in T}p_i \big|
+	= \LN \big|\mathrm{Pr}\big(P(G_N)\big) -
+	\mathrm{Pr}\big(Q(G_N)\big)\big|	\leq
+	\LN	\big| \mathrm{Pr}\big(P(G_N)\big) -
+	\mathrm{Pr}\big(Q^\prime(G_N)\big)\big|
+	+ \frac{\epsilon}{2}.
+	\]
+	And because $P\subset Q^\prime$, 
+	\[
+	\mathrm{Pr}\big(P(G_N)\big) -
+	\mathrm{Pr}\big(Q^\prime(G_N)\big)
+	=
+	\mathrm{Pr}\big(P(G_N) \wedge \neg Q^\prime(G_N) \big).
+	\]
+	It is also satisfied that
+	\[
+	P(G_N) \wedge \neg Q^\prime(G_N) \quad \iff \quad 
+	\bigvee_{x=1}^k F_{N,l}\simeq H_{i_x} \wedge 
+	F_N\not\simeq H_{i_x} 
+	\]
+	Taking into account that the events 
+	$F_{N,l}\simeq H_{i_x} \wedge 
+	F_N\not\simeq H_{i_x}$ are disjoint for each $x$
+	we get
+	\[
+	\mathrm{Pr}\big(\bigvee_{x=1}^k F_{N,l}
+	\simeq H_{i_x} \wedge 
+	F_N\not\simeq H_{i_x} \big)=
+	\sum_{x=1}^{k} \mathrm{Pr}\big( F_{N,l}
+	\simeq H_{i_x} \wedge 
+	F_N\not\simeq H_{i_x} \big)
+	\]
+	In consequence,
+	\[
+	\big|\LN \mathrm{Pr}\big(P(G_N)\big)- \sum_{i\in T}p_i \big|
+	\leq
+	\LN	\big|\sum_{x=1}^{k} \mathrm{Pr}\big( F_{N,l}
+	\simeq H_{i_x} \wedge 
+	F_N\not\simeq H_{i_x} \big)|
+	+ \frac{\epsilon}{2}\leq
+	\sum_{x=1}^{k} \frac{\epsilon}{2k} + \frac{\epsilon}{2}
+	\leq \epsilon,
+	\]
+	and we are finished. \par
+	Now it is left to prove that
+	$\overline{L_c}\subseteq S_c$. 
+	It is a known fact \cite{kakeya1914partial}, 
+	\cite{hornich1941beliebige}, \cite{nymann2000paper}
+	that $S_c$ is a perfect set. In particular
+	$S_c$ is closed and $\overline{S_c}=S_c$. In
+	consequence it suffices to show that
+	$L_c\subset S_c$.\par
+	Let $H\in \mathcal{U}$.
+	One can show via EF games (see \cite{mastertesisalberto}) 
+	that for any given FO property $P$,
+ 	\[
+ 	\LN \mathrm{Pr}\big( P(G_N)) \, | \, F_N\simeq H \big)
+ 	= 0 \text{ or } 1.
+ 	\]
+ 	We want to show that 
+ 	\[
+ 	\LN \mathrm{Pr}\big( P(G_N)) \big)
+ 	= \sum_{i=1}^\infty \LN \mathrm{Pr}\big( F_N \simeq H_i \big)
+ 	\mathrm{Pr}\big( P(G_N)) \, | \, F_N\simeq H_i \big).
+ 	\]
+ 	Fix an arbitrarily small real constant $\epsilon>0$. We
+ 	need to prove that there exists an index $j_0\in \N$ such
+ 	that for all $j\geq j_0$
+ 	\[
+ 	\big|\LN \mathrm{Pr}\big( P(G_N) \big) -
+ 	\sum_{i=1}^j \LN \mathrm{Pr}\big( F_N \simeq H_i \big)
+ 	\mathrm{Pr}\big( P(G_N) \, | \, F_N\simeq H_i \big)\big|\leq 
+ 	\epsilon.
+ 	\]
+	Notice that the events $F_N\simeq H_i$ are disjoint for each
+	$i$. So we obtain:
+	\[
+	\LN \mathrm{Pr}\big( P(G_N)\big)=
+	\LN \sum_{i=1}^\infty \mathrm{Pr}\big( F_N \simeq H_i \big)
+	\mathrm{Pr}\big( P(G_N)) \, | \, F_N\simeq H_i \big).	
+	\] 
+	Let $M=\LN \mathrm{E}(e(F_N))$ and let $l=M/\epsilon$.
+	There exists some $j_0\in \N$ such that $e(H_i)\geq M$ 
+	for all $i\geq j_0$. In consequence, for all $j\geq j_0$,
+	\[
+	\LN \sum_{i=j}^{\infty} \mathrm{Pr}\big( F_N \simeq H_i \big) \leq 
+	\epsilon.	
+	\]
+	And we obtain
+	\[
+	\big|\LN \mathrm{Pr}\big( P(G_N) \big) -
+	\sum_{i=1}^j \LN \mathrm{Pr}\big( F_N \simeq H_i \big)
+	\mathrm{Pr}\big( P(G_N) \, | \, F_N\simeq H_i \big)\big|=
+	\LN \sum_{i=j}^{\infty} \mathrm{Pr}\big( F_N \simeq H_i \big) \leq 
+	\epsilon,
+	\]
+	as we wanted. This proves SADDA. Finally, let 
+	\[
+	T=\{i\in \N \, | \, \LN \mathrm{Pr}
+	\big( P(G_N) \, | \, F_N\simeq H_i \big) = 1 \,	
+	\}
+	\]
+	It is satisfied that 
+	\[
+	\sum_{i=1}^\infty \LN \mathrm{Pr}\big( F_N \simeq H_i \big)
+	\mathrm{Pr}\big( P(G_N)) \, | \, F_N\simeq H_i \big)=
+	\sum_{i\in T} \LN \mathrm{Pr}\big( F_N \simeq H_i \big)
+	= \sum_{i\in T} p_i.
+	\]
+	Finished!!!
 \end{proof}
 
 
