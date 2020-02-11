@@ -118,6 +118,7 @@ of $G_N$, are either trees or unicycles.
 	\todo[inline]{Está todo hecho en el modelo uniforme, 
 		pero la transferencia uniforme-$>$ binomial es ``sencilla''}
 \end{proof}
+\noindent\rule{2cm}{0.4pt}\par
 Given an hypergraph $G$, we will call the \textbf{fragment} $F(G)$
 of $G$ to the union of its unicyclic components. We will abbreviate
 $F(G_N)$ as $F_N$.
@@ -238,13 +239,20 @@ $F(G_N)$ as $F_N$.
 	and both expressions are finite quantities, proving
 	the theorem. 
 	\end{proof}
+	\noindent\rule{2cm}{0.4pt}\par
 	
 	\begin{theorem} \label{thm:expectedcycles}
 		Let $0< c< (d-2)!$. For any $k\in \N$, 
-		let  $Y_{N,\geq k}$ be the random variable that counts how many 
-		cycles with at least $k$ edges lie in $G_N$. Then
+		let $Y_{N,k}$ be the random
+		variable that counts
+		the $k$-cycles that lie in $G_N$,
+		and let $Y_{N,\geq k}= \sum_{l=1}^k Y_{N,l}$.
+		Then
 		\[
-		\LN \mathrm{E}[\gamma_{N,\geq k}]=\sum_{l=k}^{\infty} 
+		\LN \mathrm{E}\big[Y_{N,\geq k}\big]=
+		\sum_{l=k}^{\infty} \LN \mathrm{E}
+		\big[Y_{N,l}\big]=
+		\sum_{l=k}^{\infty} 
 		\left(\frac{c}{(d-2)!}\right)^l \frac{1}{2l}
 		\] 	
 		In particular, if $Y_N$ is the random variable that counts the cycles
@@ -263,66 +271,35 @@ $F(G_N)$ as $F_N$.
 	\todo[inline]{Esto está hecho en el artículo \cite{erdHos1960evolution}
 	para grafos, y para hypergrafos no lo he visto.}
 	\begin{proof}
-		For $k\in \N$ let $Y_{N,k}$ be the random
-		variable that counts
-		the $k$-cycles that lie in $G_N$.
+	
 		A simple computation yields that for 
 		any $k\geq 2$ ($k\geq 3$ if $d=2$),
 		$
-		\mathrm{E}[Y_{N,k}]= \frac{(N)_{k(d-1)}}{2k}
-		\left(\frac{c}{N^{d-1}}\right)^k,$
+		\mathrm{E}[Y_{N,k}]= 
+		\frac{(N)_{k(d-1)}}{2k}
+		\left(\frac{c}{N^{d-1}(d-2)!}\right)^k,$
 		and
 		$
-		\LN	\mathrm{E}[Y_{N,k}]= \frac{c^k}{2k}
+		\LN	\mathrm{E}[Y_{N,k}]= 
+		\left(\frac{c}{(d-2)!}\right)^k \frac{1}{2k}
 		$.
 		Also,
 		$
-		\mathrm{E}[Y_{N,k}]\leq \frac{c^k}{2k}$
+		\mathrm{E}[Y_{N,k}]\leq \left(\frac{c}{(d-2)!}\right)^k \frac{1}{2k}$
 		for all $N$. In consequence, applying the dominated convergence
 		theorem we obtain
 		\[ 
 		\LN \sum_{l=k}^\infty \mathrm{E}[Y_{N,l}]=
-		 \sum_{l=k}^\infty \frac{c^l}{2l} \quad 
+		 \sum_{l=k}^\infty \left(\frac{c}{(d-2)!}\right)^l \frac{1}{2l} \quad 
 		 \text{ for any } k\in \N.
 		\]
-		Using that $Y_{N,\geq k}$ is the sum of all the $Y_{N,l}$
-		for $l\geq k$ and the Taylor expansion of $ln(1-x)$ we obtain
+		And using the Taylor expansion of $ln(1-x)$ we obtain
 		the desired	result. 
 	\end{proof}
+	\noindent\rule{2cm}{0.4pt}\par
+
 	
-	Given $0<c<(d-2)!$ we define the function $B_d(c)$ as 
-	the limit as $N$ tends to infinity of the expected number of
-	cycles in $G_N(c)$. Because of our last theorem
-	\[
-	B_d(c)=\begin{cases}
-	\frac{c}{2(d-2)!}+ \ln\left(1-\frac{c}{2(d-2)!}\right)
-	,& \text{ if } d>2\\	
-	\frac{c}{2}+ \frac{c^2}{4} \ln\left(1-\frac{c}{2}\right)
-	, &\text{ if } d=2.
-	\end{cases}
-	\]
 	
-	\begin{corollary} \label{thm:limitchangeunicycles}
-		Let $0<c<(d-2)!$. For each $k\in \N$ let 
-		$X_{N,k}$ be the random variable that counts the
-		unicyclic components in $G_N$ with exactly $k$ edges. 
-		Then 
-		\[
-	 	B_d(c)=\LN \mathrm{E}\big[\sum_{i=1}^\infty X_{N,i} \big]	
-		= \sum_{i=1}^\infty \LN \mathrm{E}\big[ X_{N,i} \big].
-		\]
-	\end{corollary}
-	\begin{proof}
-	The equality $B_d(c)=\LN \mathrm{E}\big[\sum_{i=1}^\infty$ follows from the
-	fact that the asymptotic
-	number of expected cycles and the asymptotic number
-	of expected unyciclic components in $G_N$ coincide
-	for $0<c<(d-2)!$ because of \cref{thm:subcritical}.\par
-	The equality $\LN \mathrm{E}\big[\sum_{i=1}^\infty X_{N,i} \big]	
-	= \sum_{i=1}^\infty \LN \mathrm{E}\big[ X_{N,i} \big]$
-	follows from applying the dominated converge theorem as in 
-	\cref{thm:sizefragment}.
-	\end{proof}
 	A simple application of the factorial moments method proves the following
 	theorem:
 	\begin{theorem} \label{thm:probcycles} 
@@ -340,10 +317,90 @@ $F(G_N)$ as $F_N$.
 		\Big)= \prod_{i=1}^{j} e^{-\lambda_i}\frac{\lambda_i^{a_i}}{a_i!}
 		\]
 	\end{theorem}
-  	\todo[inline]{Esto está hecho en el libro de Bollobás de random graphs. 
-  	Para hypergrafos
-  	no lo he encontrado, pero realmente es lo mismo. Si queréis lo hago.}
-	
+	\todo[inline]{Esto está hecho en el libro de Bollobás de random graphs. 
+		Para hypergrafos
+		no lo he encontrado, pero realmente es lo mismo. Si queréis lo hago.}
+		
+	\noindent\rule{2cm}{0.4pt}\par
+		
+	Given $0<c<(d-2)!$ we define the function $B_d(c)$ as 
+	the limit as $N$ tends to infinity of the expected number of
+	cycles in $G_N(c)$. Because of \cref{thm:expectedcycles}
+	\[
+	B_d(c)=\begin{cases}
+	\frac{c}{2(d-2)!}+ \ln\left(1-\frac{c}{2(d-2)!}\right)
+	,& \text{ if } d>2\\	
+	\frac{c}{2}+ \frac{c^2}{4} \ln\left(1-\frac{c}{2}\right)
+	, &\text{ if } d=2.
+	\end{cases}
+	\]	
+		
+	\begin{corollary} \label{thm:limitchangeunicycles}
+		Let $0<c<(d-2)!$. For each $k\in \N$ let 
+		$X_{N,k}$ be the random variable that counts the
+		unicyclic components in $G_N$ with exactly $k$ edges. 
+		Then 
+		\[
+	 	B_d(c)=\LN \mathrm{E}\big[\sum_{i=1}^\infty X_{N,i} \big]	
+		= \sum_{i=1}^\infty \LN \mathrm{E}\big[ X_{N,i} \big].
+		\]
+	\end{corollary}
+	\begin{proof}
+	We begin by showing that
+	\begin{equation} \label{eqn:cyclesunicycles}
+		B_d(c)=\LN \mathrm{E}\big[\sum_{i=1}^\infty X_{N,k}].
+	\end{equation}
+	Let $X_N=\sum_{i=1}^{\infty} X_{N,k}$ be the random variable
+	that counts the unicyclic components in $G_N$. Let $Y_N$ count
+	the cycles in $G_N$ and $Z_N$ count the cycles in $G_N$ that 
+	belong to some non-unicyclic component. It is satisfied that 
+	$X_N=Y_N-Z_N$. One can show that $\LN \mathrm{E}[Z_N]=0$ using that 
+	(1) $\LN \mathrm{E}[Y_N]=B_d(c)$
+	by \cref{thm:expectedcycles}, (2) $Z_N\leq Y_N$ for all $N\in \N$, and
+	(3)	$\LN \mathrm{Pr}(Z_N>0)=0$ because of \cref{thm:subcritical}. 
+	In consequence,
+	\[
+	 \LN \mathrm{E}\big[X_N\big]=\LN \mathrm{E}\big[Y_N\big]=B_d(c),
+	\]
+	as we wanted. 
+	\par
+%	For each $k$, let $Y_{N,k}$  
+%	be the random variables that counts the 
+%	$k$-cycles in $G_N$ and let $Z_{N,k}$ count how many of 
+%	those $k$-cycles belong to a non-unicyclic component.
+%	Define $Y_N=\sum_{i=1}^{\infty} Y_{N,i}$ and 
+%	$Z_N=\sum_{i=1}^{\infty} Z_{N,i}$.\par
+%	By definition $B_d(c)=\LN \mathrm{E}[Y_N]$, and
+%	$B_d(c)-\LN \mathrm{E}[X_N]=\LN \mathrm{E}[Z_N]$.
+%	Let $\epsilon>0$ be an arbitrarily small real number. 
+%	We will show that $\LN \mathrm{E}[Z_N]\leq\epsilon$, and 
+%	this will prove \cref{eqn:cyclesunicycles}.
+%	Using \cref{thm:expectedcycles} one can prove that
+%	there exists some $j$ such that $\LN \mathrm{E}
+%	[\sum_{i=j}^{\infty} Y_{N,i}]\leq \epsilon/2$.
+%	Using that $Z_{N,i}\leq Y_{N,i}$ for all $N$ and $i$
+%	we obtain that 
+%	\[
+%	\LN \mathrm{E}\big[ \sum_{i=1}^\infty Z_{N,i}\big]
+%	\leq \LN \mathrm{E}\big[ \sum_{i=1}^{j-1} Z_{N,i}\big] +
+%	\epsilon/2
+%	\leq
+%	\LN \mathrm{E}\big[ \sum_{i=1}^{j-1} Y_{N,i}\big] +
+%	\epsilon/2.
+%	\]
+%	Let $Y_{N,<j}=\sum_{i=1}^{j-1} Y_{N,i}$. 
+%	Using $\cref{thm:probcycles}$ and the fact that
+%	the sum of Poisson variables is a Poisson variable 
+%	whose mean is the sum of the means of the initial variables
+%	we get that $Y_{N,<j}$ converge in distribution to 
+%	a Poisson variable with mean 
+%	
+	The equality $\LN \mathrm{E}\big[\sum_{i=1}^\infty X_{N,i} \big]	
+	= \sum_{i=1}^\infty \LN \mathrm{E}\big[ X_{N,i} \big]$
+	follows from applying the dominated converge theorem as in 
+	\cref{thm:sizefragment}.
+	\end{proof}
+		\noindent\rule{2cm}{0.4pt}\par
 	
 	Let $H$ be an unicycle and let $i=e(H)$, $j=v(H)=i(d-1)$. 
 	Let $X_{N,H}$ be the random variable that counts
@@ -369,7 +426,7 @@ $F(G_N)$ as $F_N$.
 	Another application of the factorial moments method proves the next theorem:
 
 \begin{theorem} \label{thm:probunicycliccomponents}
-	Let $H_1,\dots, H_j$ be unicycles, and let $P(N)\sim c/N$. 
+	Let $H_1,\dots, H_j$ be unicycles. 
 	Then, as $N$ tends to infinity, the $X_{N,H_i}$'s converge in 
 	distribution to independent Poisson variables with means
 	$\lambda_i=s^{e(H_i)}\frac{(d-2)!^{e(H_i)}}{|Aut(H_i)|}$
@@ -382,11 +439,12 @@ $F(G_N)$ as $F_N$.
 	\]
 \end{theorem} 
 
+\noindent\rule{2cm}{0.4pt}\par
 
 
 \begin{theorem} 
-	Let $0<c<(d-2)!$ and $p(N)\sim c/N$. For $i\in \N$ let 
-	$\lambda_i=\left(\frac{c}{(d-2)!}\right)^i\frac{1}{2i!}$. 
+	Let $0<c<(d-2)!$. For $i\in \N$ let 
+	$\lambda_i:=\lambda_i(c)=\left(\frac{c}{(d-2)!}\right)^i\frac{1}{2i!}$. 
 	Let $A_N$ be the event that $G^d(n,p(N))$ contains no cycles. 
 	Define $F_d:=F_d(c)$ as
 	\[
@@ -407,7 +465,7 @@ $F(G_N)$ as $F_N$.
 \begin{proof}
 	For each $k\in \N$ define $F_{d,k}:=F_{d,k}(c)$ as 
 	\[
-	F_{d,k}(c)=\begin{cases}
+	F_{d,k}=\begin{cases}
 	e^{\sum_{i=2}^k -\lambda_i} 
 	& \text{ if } d>2\\
 	e^{\sum_{i=3}^k -\lambda_i} 
@@ -423,22 +481,22 @@ $F(G_N)$ as $F_N$.
 	\text{ for any } j\geq k.
 	\]
 	For each $k\in N$ let $A_{N,k}$ be the event that $G^d(N,p(N))$ contains 
-	no cycle with length at most $k$. Using \cref{thm:probcycles}, we obtain 
+	no cycles with length at most $k$. Using \cref{thm:probcycles}, we obtain 
 	\[
 	\LN \mathrm{Pr}\big(A_{N,k}\big)=F_{d,k}.\]
-	For any $k\in \N$ let $\gamma_{N,\geq k}$ be the random variable that
+	For any $k\in \N$ let $Y_{N,\geq k}$ be the random variable that
 	counts the number of cycles in $G^d(N,p(N))$ with length at least $k$. 
 	Then, using \cref{thm:expectedcycles} we obtain that 
-	$\lim\limits_{k\to \infty}	\LN \mathrm{E}[\gamma_{N,\geq k}]=0$. \\
+	$\lim\limits_{k\to \infty}	\LN \mathrm{E}[Y_{N,\geq k}]=0$. \\
 	Fix $k$ such that for any $j\geq k$
 	\[
-	\Big|\LN \mathrm{E}[\gamma_{N,\geq k}]\Big| \leq \epsilon.
+	\Big|\LN \mathrm{E}[Y_{N,\geq k}]\Big| \leq \epsilon.
 	\]
-	Notice that for any $j$, "$A_N$ is true and $A_{N,j}$ is false"
-	if and only if $\mathrm{Pr}\big(\gamma_{N,\geq j} \geq 1\big)$. 
+	Notice that for any $j$, ``$A_N$ is true and $A_{N,j}$ is false"
+	if and only if $\mathrm{Pr}\big(Y_{N,\geq j} \geq 1\big)$. 
 	Also, by Markov inequality, 
-	$\mathrm{Pr}\big(\gamma_{N,\geq j} \geq 1\big)
-	\leq \mathrm{E}\big[\gamma_{N,\geq j}\big]$.
+	$\mathrm{Pr}\big(Y_{N,\geq j} \geq 1\big)
+	\leq \mathrm{E}\big[Y_{N,\geq j}\big]$.
 	In consequence, for any $j\geq k$
 	\[
 	\LN \Big|\mathrm{Pr}\big(A_N\big)- \mathrm{Pr}\big(A_{N,j}\big)\Big|
@@ -451,53 +509,58 @@ $F(G_N)$ as $F_N$.
 	\]
 	and we are finished. 
 \end{proof}
-
+	\noindent\rule{2cm}{0.4pt}\par
 
 \begin{theorem} 
-	Let $0<c<(d-2)!$, and $p(N)\sim c/N^{d-1}$.
+	Let $0<c<(d-2)!$.
 	Let $H$ be an hypergraph whose components are all 
 	unicycles, and let  $F_d:=F_d(c)$ be as in last theorem. 
 	Then
 	\[
-	\LN \mathrm{Pr}\Big(F_N\simeq H\Big)=F_d(c)\left(
-	\frac{c}{(d-2)!}e^{\frac{c}{(d-2)!}}\right)^{e(H)} \frac{(d-2)!^{e(H)}}{|Aut(H)|}
+	\LN \mathrm{Pr}\Big(F_N\simeq H\Big)=F_d(c)
+	s^{e(H)} \frac{(d-2)!^{e(H)}}{|Aut(H)|}
+	\],
+	where 
+	\[
+	s=\frac{c}{(d-2)!}e^{\frac{c}{(d-2)!}},
 	\]
+	as before.
 \end{theorem}
 
 \begin{proof}
 	Fix such $H$.
-	Let $U_1,U_2,\dots, U_i,\dots$ be an enumeration of all unicycles in a way
-	such that $e(U_i)\leq e(U_j)$ if $i\leq j$.  For each $i\in \N$ let $a_i$
+	Let $U_1,U_2,\dots, U_i,\dots$ be an enumeration of all unicycles.
+	For each $i\in \N$, let $a_i$
 	be the number of connected components of $H$ that are isomorphic to $U_i$,
-	and let $X_{N,i}$ be the random variable that counts the number of connected 
+	and let $W_{N,i}$ be the random variable that counts the number of connected 
 	components in $G^d(N,P(N))$ that are isomorphic to $U_i$. Clearly,
-	$F_N\simeq H$ if and only if $X_{N,i}=a_i$ for all $i$.  Thus,
+	$F_N\simeq H$ if and only if $W_{N,i}=a_i$ for all $i$.  Thus,
 	\[
 	\LN \mathrm{Pr}\big(F_N\simeq H\big)= 
-	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^\infty X_{N,i}=a_i\big).
+	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^\infty W_{N,i}=a_i\big).
 	\]
 	First, we are going to show that 
 	\[
-	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^\infty X_{N,i}=a_i\big)=
+	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^\infty W_{N,i}=a_i\big)=
 	\lim\limits_{j\to \infty}
-	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j X_{N,i}=a_i\big).
+	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j W_{N,i}=a_i\big).
 	\]
 	Fix $\epsilon > 0$ an arbitrarily small real constant. We need
 	to prove that there exists some $j_0\in \N$ satisfying
 	\[
-	\left|\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j X_{N,i}=a_i\big)
+	\left|\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j W_{N,i}=a_i\big)
 	- \lim\limits_{j\to \infty}
-	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j X_{N,i}=a_i\big)
+	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j W_{N,i}=a_i\big)
 	\right|
 	\leq \epsilon
 	\text{ for all } j\geq j_0.
 	\]
-	For each $k \in \N$ let $Y_{N,k}$ be the random variable
+	For each $k \in \N$ let $X_{N,k}$ be the random variable
 	that counts the uni-cyclic connected components of $G^d(N,p(N))$
 	with exactly $k$ edges.	By \cref{thm:sizefragment}
 	we have that for some $k_0\in \N$
 	\[ 
-	\LN \sum_{l=k_0}^{\infty }\mathrm{E}\big[ Y_{N,l} \big] \leq 
+	\LN \sum_{l=k_0}^{\infty }\mathrm{E}\big[ X_{N,l} \big] \leq 
 	\epsilon
 	\]
 	Let $k_1$ be the maximum number of edges in a connected component of 
@@ -505,18 +568,18 @@ $F(G_N)$ as $F_N$.
 	$e(U_j)>k_1$ for any $j\geq j_0$. \par
 	Given any $j\geq j_0$, $F_N \simeq H$ if and only if 
 	\[
-	\big(\bigwedge_{i=1}^{j} X_{N,i}=a_i\big) \wedge
-	\big(\sum_{l=k}^\infty Y_{N,l}=0  \big) 
+	\big(\bigwedge_{i=1}^{j} W_{N,i}=a_i\big) \wedge
+	\big(\sum_{l=k}^\infty X_{N,l}=0  \big) 
 	\]
 	Using Markov inequality we get 
 	\[
-	\LN \mathrm{Pr}\big( \sum_{l=k}^\infty Y_{N,l}\geq 1  \big) \leq \epsilon
+	\LN \mathrm{Pr}\big( \sum_{l=k}^\infty X_{N,l}\geq 1  \big) \leq \epsilon
 	\]
 	Thus,
 	\[
-	\left|\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j X_{N,i}=a_i\big)
+	\left|\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j W_{N,i}=a_i\big)
 	- \lim\limits_{j\to \infty}
-	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j X_{N,i}=a_i\big)
+	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j W_{N,i}=a_i\big)
 	\right|
 	\leq \epsilon,
 	\]
@@ -524,11 +587,11 @@ $F(G_N)$ as $F_N$.
 	Using \cref{thm:probunicycliccomponents} we get
 	\[
 	\lim\limits_{j\to \infty}
-	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j X_{N,i}=a_i\big)=
+	\LN \mathrm{Pr}\big( \bigwedge_{i=1}^j W_{N,i}=a_i\big)=
 	\prod_{i=1}^\infty e^{-\lambda_i} \frac{\lambda_i^{a_i}}{a_i!},
 	\]
 	where $\lambda_i=s^{e(U_i)}\frac{(d-2)!^{e(U_i)}}{|Aut(U_i)|}= 
-	\LN \mathrm{E}[X_{N,i}]$, and $s=s(c)$ is defined as in the statement 
+	\LN \mathrm{E}[W_{N,i}]$, and $s=s(c)$ is defined as in the statement 
 	of the theorem. Using \cref{thm:limitchangeunicycles} we obtain
 	\[
 	\sum_{i=1}^{\infty} \lambda_i = B_d(c),
@@ -540,18 +603,18 @@ $F(G_N)$ as $F_N$.
 	The following identities hold:
 	\[
 	\sum_{i=1}^\infty e(U_i)a_i = e(H) \qquad 
-	\prod_{i=1}^{\infty} |Aut(U_i)^{a_i} a_i!= |Aut(H)|.
+	\prod_{i=1}^{\infty} |Aut(U_i)|^{a_i} a_i!= |Aut(H)|.
 	\]
 	As a consequence we get
 	\[
 	\prod_{i=1}^\infty \frac{\lambda_i^{a_i}}{a_i!}=
 	\prod_{i=1}^\infty (s(d-2)!)^{e(U_i)a_i} 
-	\frac{1}{|aut(U_i)|^{a_i}a_i!}=
+	\frac{1}{|Aut(U_i)|^{a_i}a_i!}=
 	s^{e(H)}\frac{(d-2)!^{e(H)}}{|Aut(H)|},
 	\]
 	and the theorem follows. 
 \end{proof}
-
+	\noindent\rule{2cm}{0.4pt}\par
 Let us denote by $\mathcal{U}$ the class of hypergraphs
 whose connected components are unicycles. For the case $d=2$ 
 the asymptotic distribution of the fragment $F_N$ coincides with
@@ -567,7 +630,7 @@ of $F_N$ is indeed a probability distribution.
 
 
 \begin{theorem} \label{thm:limitdistribution}
-	Let $0<c<(d-2)!$ and let $p(N)\sim c/N^{d-1}$. 
+	Let $0<c<(d-2)!$. 
 	Let $H_1, \dots H_k, \dots$ be an enumeration of all hypergraphs
 	in $\mathcal{U}$. For each $i\in \N$ 
 	denote by $p_i$ the limit $\LN \mathrm{Pr}(F_N \simeq H_i)$. Then
@@ -613,7 +676,7 @@ unlike $F(G)\simeq H$, is expressible in FO logic. We will
 abbreviate $F_i(G_N)$ as $F_{N,i}$. 
 
 \begin{theorem}
-	Let $0<c<(d-2)!$, and $p(N)\sim c/N^{d-1}$. Let 
+	Let $0<c<(d-2)!$. Let 
 	$H_1,\dots, H_i,\dots$ be an enumeration of all
 	hypergraphs in $\mathcal{U}$ and for each $i\in \N$ 
 	let $p_i=\LN \mathrm{Pr}(F_N\simeq H_i)$. 
@@ -741,11 +804,11 @@ abbreviate $F_i(G_N)$ as $F_{N,i}$.
  	= 0 \text{ or } 1.
  	\]
  	We want to show that 
- 	\[
- 	\LN \mathrm{Pr}\big( P(G_N)) \big)
+ 	\begin{equation}\label{eqn:aux}
+ 	\LN \mathrm{Pr}\big( P(G_N) \big)
  	= \sum_{i=1}^\infty \LN \mathrm{Pr}\big( F_N \simeq H_i \big)
  	\mathrm{Pr}\big( P(G_N)) \, | \, F_N\simeq H_i \big).
- 	\]
+ 	\end{equation}
  	Fix an arbitrarily small real constant $\epsilon>0$. We
  	need to prove that there exists an index $j_0\in \N$ such
  	that for all $j\geq j_0$
@@ -777,7 +840,7 @@ abbreviate $F_i(G_N)$ as $F_{N,i}$.
 	\LN \sum_{i=j}^{\infty} \mathrm{Pr}\big( F_N \simeq H_i \big) \leq 
 	\epsilon,
 	\]
-	as we wanted. This proves SADDA. Finally, let 
+	as we wanted. This proves \cref{eqn:aux}. Finally, let 
 	\[
 	T=\{i\in \N \, | \, \LN \mathrm{Pr}
 	\big( P(G_N) \, | \, F_N\simeq H_i \big) = 1 \,	
@@ -790,7 +853,7 @@ abbreviate $F_i(G_N)$ as $F_{N,i}$.
 	\sum_{i\in T} \LN \mathrm{Pr}\big( F_N \simeq H_i \big)
 	= \sum_{i\in T} p_i.
 	\]
-	Finished!!!
+	This finishes the proof of the theorem.  
 \end{proof}
 
 
