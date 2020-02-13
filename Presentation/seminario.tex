@@ -1,0 +1,278 @@
+\documentclass[handout, 11pt]{beamer}
+
+\usepackage[english] {babel}                 % Idioma (és important a l'hora de separar una paraula a final de línia)
+%\input{myStyle.sty}
+
+
+\usetheme{CambridgeUS}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{amssymb,mathtools, amsmath, amsfonts, amsthm}
+\newcommand{\Ln}{\lim\limits_{n\to \infty}}
+\setbeamertemplate{itemize items}[circle]
+
+\title[First Order Logic of Sparse Random Graphs]{First Order
+Logic of Sparse Random Graphs}
+
+
+\begin{document}
+	\frame{\titlepage}
+
+\begin{frame}{Preliminaries: The first order logic (FO) of graphs}
+	Variables $x_1, \dots, x_n, \dots$ $\rightarrow$ Vertices\\
+	A binary relation symbol $E$ $\rightarrow$ Edges\\
+	Boolean connectives $\wedge, \vee, \neg, \dots$ and equality symbol $=$.\\
+	Quantifiers $\forall, \exists$.\\~\\
+	
+	Can express
+	the existence of a given subgraph,
+	the existence of a covering set of size $k$\dots
+	\\~\\	
+	Cannot express connectivity, $k$-colorability, existence of a Hamiltonian
+	path\dots
+	\\~\\
+	Example: 
+	$\exists x \exists y (Exy \wedge \forall z(Ezy \iff Ezx))$.
+\end{frame}
+
+\begin{frame}{Preliminaries: The binomial model of random graphs $G(n,p)$}
+
+	Start with vertex set $[n]=\{1,\dots, n\}$ and
+	each edge is added with probability $p$ independently. 
+	Given $G=([n],E)$,
+	\[ \mathrm{Pr}(G)= p^{|E|}\cdot (1-p)^{\binom{n}{2}- |E|}. \]
+~\\
+We are interested in the asymptotic behavior of 
+$G(n,p)$ when $p=p(n)=c/n$.
+\end{frame}
+
+\begin{frame}{Preliminaries: The binomial model of random graphs $G(n,p)$}
+
+
+\begin{theorem}[Erd\"os, R\'enyi, 1960]
+	For $c<1$, a.a.s the connected components in
+	$G_n$ have size $O(\log(n))$ and are either
+	trees or unicycles.\par
+	For $c > 1$, a.a.s there is a unique large 
+	complex component in $G_n$ of size $O(n)$.	 
+\end{theorem}
+
+\begin{theorem}[Lynch, 1960] 
+	Let $P$ be a F.O. property of graphs. Then,
+	the function
+	\[
+	F_{P}(c)= \Ln \mathrm{Pr}\big( P(G_n(c)) \big)
+	\]
+	is well defined and analytic.
+\end{theorem}
+\end{frame}
+
+
+\begin{frame}{The problem}
+	F.O. properties cannot individually
+	detect the phase transition
+	at $c=1$.\\~\\
+	What if we consider the set $\overline{L(c)}$? Where
+	\[L(c)=\{ \Ln \mathrm{Pr}\big( 
+	P(G_n(c))\big) \, | \, P \text{ is a F.O. property }.	\}
+	\]
+	Previous related work:
+	\textit{Logical limit laws for minor-closed classes of graphs}
+	by P. Heinig, T. Muller, M. Noy, A. Taraz. 
+	
+\end{frame}
+
+\begin{frame}{Supercritical phase}
+$X_{\leq k}(G):= \#$ of cycles of length at most $k$ in $G$.
+\begin{theorem}
+	\[
+	X_{\leq k}(G_n)\xrightarrow[n\to \infty]{D}
+	\mathrm{Pois}(\lambda_k),
+	\]
+	where
+	\[
+	\lambda_k=\sum_{i=3}^{k} \frac{c^i}{2i}.
+	\]
+\end{theorem}
+~\\
+For $c\geq 1$, $\lambda_k \xrightarrow[k\to \infty]{} \infty$.
+\\~\\
+The property $X_{\leq k}(G)=a$ can be written in F.O. logic. 
+\end{frame}  
+
+\begin{frame}{Supercritical phase}
+	Because of the Central Limit Theorem one can show that
+	\[
+	\lim\limits_{x\to \infty}
+	\mathrm{Pr}\big( \mathrm{Pois}(x)\leq x + y\sqrt{x}\big) 
+	= \Phi(y),	
+	\]
+	where $\Phi(y)$ is the CDF of $\mathrm{N}(0,1)$.
+	\\~\\
+	\begin{theorem}
+		For $c\geq 1$, $\overline{L(c)}=[0,1]$.
+	\end{theorem}
+\end{frame}
+
+\begin{frame}{Subcritical phase.}
+ $F(G):=$ Union of unicyclic components of $G$.\\~\\
+ $\mathcal{U}:=$ Class of graphs whose components are unicycles.\\~\\
+Let $P$ be a F.O. property. One
+can show via combinatorial games that for any $H\in \mathcal{U}$
+\[
+\Ln \mathrm{Pr}\big( P(G_n) \,|\, F(G_N)\simeq H_i \big)
+= 0 \text{ or } 1.
+\]
+% Consider $H_1,\dots,H_i,\dots$ an enumeration of $\mathcal{U}$.
+% \\~\\
+% Define $p_i:=\Ln \mathrm{Pr}\Big( F(G_n)\simeq H_i\Big)$, and
+% $S(c):=\{ \sum_{i\in T} p_i(c) \, | \, T\subset \mathbb{N}\, \}$.
+% \\~\\
+% 
+\end{frame}
+
+\begin{frame}{At least one gap for $c<c_0$}
+	$A(c):=\Ln \mathrm{Pr}\big( G_n \text{ is acyclic }\big)$\\~\\
+	\begin{theorem}[Erd\"os, R\'enyi, 1960]
+		\[ A(c)=e^{\frac{2c+c^2}{4}}\sqrt{1-c}. \]	
+	\end{theorem}
+	~ \vfill
+	Let $c_0$ be the only solution to $A(c_0)=1/2$ in $[0,1]$.\\~\\
+	\begin{theorem}
+		If $c<c_0$ then $1/2\notin \overline{L(c)}$.
+	\end{theorem}
+	
+	
+\end{frame}
+
+\begin{frame}{The set of limit probabilities of the fragment}
+	 Consider $H_1,\dots,H_i,\dots$ an enumeration of $\mathcal{U}$.
+	 \\~\\
+	 Define $p_i:=\Ln \mathrm{Pr}\Big( F(G_n)\simeq H_i\Big)$, and
+	 $S(c):=\{ \sum_{i\in T} p_i(c) \, | \, T\subset \mathbb{N}\, \}$.
+	 \\~\\
+	 \begin{theorem}
+	 $\overline{L(c)}=S(c)$.
+	 \end{theorem}
+	 
+\end{frame}
+
+
+\begin{frame}{}
+We show an sketch of the proof. 
+\vspace*{2mm}
+\begin{itemize}[leftmargin=5mm]
+	\item[\textbullet] $\overline{L(c)}\subseteq S(c)$
+\end{itemize}
+\vfill
+Let $P$ be a F.O. property. Recall that for any $H_i$
+\[
+\Ln \mathrm{Pr}\big( P(G_n) \,|\, F(G_N)\simeq H_i \big)
+= 0 \text{ or } 1.
+\]
+In consequence, if $T$ is the set of $i$'s that make last limit
+$1$, 
+\[
+\Ln \mathrm{Pr}\big( P(G_n)\big): = \sum_{i\in T} p_i
+\]
+\end{frame}
+\begin{frame}{}
+\begin{itemize}[leftmargin=5mm]
+	\item[\textbullet] $\overline{L(c)}\supseteq S(c)$
+\end{itemize}
+\vfill
+The property $F(G)\simeq H_i$ cannot be expressed in F.O. \\~
+\\
+$F_k(G):=$ Union of the unicyclic components of $G$ whose size is at
+most $k$. \\~\\
+The property $F_k(G)\simeq H_i$ can be expressed in F.O., and
+\[
+\lim\limits_{k\to \infty} \Ln
+\mathrm{Pr}\big( F_k(G_n)\sim H_i \big) = p_i 
+\]
+\end{frame}
+
+\begin{frame}{Kakeya criterion for partial sums}
+  Fix $0\leq c < 1$. Suppose that
+  $p_1\leq p_2\leq \dots\leq p_i\leq\dots$
+   \vfill
+  \begin{theorem}[J. E. Nymann, R.A S\'aenz, 2000]
+  ~	\vfill
+  \begin{itemize}[leftmargin=5mm]
+  	\item If $p_i\leq \sum_{j=i+1}^\infty$ for all $i$ then
+  	$S(c)=[0,1]$.\\~\\
+  	
+  	\item If $p_i\leq \sum_{j=i+1}^\infty$ for all sufficiently 
+  	large $i$ then $S(c)$ is a finite disjoint union of closed
+  	intervals.\\~\\
+  	
+  	\item If $p_i > \sum_{j=i+1}^\infty$ for all sufficiently large
+  	$i$	then $S(c)$ is homeomorphic to the Cantor set.
+	\end{itemize}
+	\end{theorem}
+\end{frame}
+
+\begin{frame}{Probability distribution of the fragment}
+	\begin{theorem}
+		Let $H\in \mathcal{U}$. Then
+		\[
+		\Ln \mathrm{Pr}\big( F(G_n)\simeq H  \big)
+		= A(c) \cdot \frac{s(c)^{v(H)}}{|Aut(H)|},
+		\]
+		where $s(c)=ce^{-c}$, and 
+		\[
+		A(c)=\Ln \mathrm{Pr}\big( G_n \text{ is acyclic }\big)
+		= e^{\frac{2c+c^2}{4}}\sqrt{1-c}.
+		\] 		
+	\end{theorem}
+\end{frame}
+
+\begin{frame}
+	\begin{theorem}
+		$\overline{L(c)}$ is always a finite union of intervals
+	\end{theorem}
+\vfill
+	If $A\cdot s^{k-1}\geq p_i> A\cdot s^k$ we can prove that
+	\[
+	\sum_{j=i+1}^\infty p_j\leq A\cdot s^{k+1}\frac{k-3}{2}.\]
+	Thus, if $\frac{k-3}{2}\geq \frac{1}{s}$, then
+	\[
+	p_i \geq \sum_{j=i+1}^\infty p_j.
+	\]
+\end{frame}
+
+\begin{frame}
+\begin{theorem}
+	For $c\geq c_0$\\
+	$\overline{L(c)}=[0,1]$
+\end{theorem}
+\vfill
+Using our previous bound and $s(c)>1/3$ we get that
+if $A\cdot s^{k-1}\geq p_i> A\cdot s^k$ for  $k\geq 9$, then
+\[
+p_i \geq \sum_{j=i+1}^\infty p_j.
+\]
+\\~\\
+After this we have to check only finitely many $p_i$'s.
+\end{frame}
+
+
+
+\begin{frame}{More results}
+	One can show that the number of gaps in $\overline{L(c)}$
+	tends to infinity as $c$ goes to zero.
+	\vfill
+	These results (with the appropriate changes) also hold in the setting of random uniform
+	hypergraphs.  
+\end{frame}
+
+\begin{frame}{Recap}
+	For $c\geq 1$ all probabilities can be approximated with statements of the type ``$G_n$ contains less than $k$ cycles of order less than $l$".\\~\\
+	For $c<1$ we can approximate F.O. probabilities using sums of fragment
+	probabilities. \\~\\
+	Using the Kakeya criterion one can show that there is a gap in
+	$\overline{L(c)}$ only when the asymptotic probability of $G_n$ being acyclic is 
+	greater than $1/2$.
+	
+\end{frame}
+\end{document}
